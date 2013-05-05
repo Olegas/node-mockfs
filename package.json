@@ -1,0 +1,25 @@
+{
+   "name": "mockfs",
+   "description": "Mocking FS module implementation for testing purpouses",
+   "version": "0.1.0",
+   "author": "Oleg Elifantiev <oleg@elifantiev.ru>",
+   "contributors": [],
+   "keywords": [
+      "fs",
+      "file system",
+      "mock",
+      "testing"
+   ],
+   "devDependencies": {
+      "mocha": "",
+      "coveralls": "",
+      "istanbul": "",
+      "mocha-istanbul": "",
+      "assert": ""
+   },
+   "scripts": {
+      "instrument": "node ./node_modules/.bin/istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib",
+      "test-cov": "npm run-script instrument && COVER=1 ISTANBUL_REPORTERS=lcovonly node ./node_modules/.bin/mocha -R mocha-istanbul",
+      "test": "node ./node_modules/mocha/bin/mocha -R spec"
+   }
+}
