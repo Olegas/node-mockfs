@@ -1,6 +1,9 @@
 mockfs
 ======
 
+[![Build Status](https://travis-ci.org/Olegas/mockfs.png)](https://travis-ci.org/Olegas/mockfs)
+[![Coverage Status](https://coveralls.io/repos/Olegas/mockfs/badge.png?branch=master)](https://coveralls.io/r/Olegas/mockfs)
+
 MockFS - Mocking FS module implementation for testing purpouses.
 
 Basic idea is to declare fs contents via JSON spec, mount it, and use through real `fs.*` functions like an ordinary fs.
