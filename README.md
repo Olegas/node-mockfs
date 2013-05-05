@@ -38,10 +38,10 @@ mfs = new MockFS(spec);
 mfs.mount('/mnt/mock');
 
 fs.existsSync('/mnt/mock/file-buffer'); // true
-fs.readFileSync('/mnt/mock/file-string'); // "querty"
+fs.readFileSync('/mnt/mock/file-string').toString(); // "qwerty"
 fs.readFile('/mnt/mock/dir/file-in-dir', function(e, r){
-  if(r)
-    console.log(r); // "inside directory"
+    Buffer.isBuffer(r); // true
+    r.toString(); // "inside directory"
 });
 
 mfs.umount('/mnt/mock');
