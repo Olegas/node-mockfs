@@ -41,13 +41,13 @@ describe("readFile", function(){
 
    });
 
-   it("Calling without callback doesn't throw", function(){
+   it("calling without callback doesn't throw", function(){
       assert.doesNotThrow(function(){
          fs.readFile('/mnt/mock/file-buffer');
       }, Error);
    });
 
-   it("Calling without arguments throws a TypeError", function(){
+   it("calling without arguments throws a TypeError", function(){
       assert.throws(function(){
          fs.readFile();
       }, TypeError);

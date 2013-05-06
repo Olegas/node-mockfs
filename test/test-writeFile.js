@@ -34,7 +34,7 @@ describe("writeFile", function(){
 
    });
 
-   it("Calling without arguments throws a TypeError", function(){
+   it("calling without arguments throws a TypeError", function(){
       assert.throws(function(){
          fs.writeFileSync();
       }, TypeError);
