@@ -9,6 +9,15 @@ MockFS - Mocking FS module implementation for testing purpouses.
 Basic idea is to declare file system contents via JSON spec, mount it, and use through real `fs.*` functions like an ordinary one.
 
 ```javascript
+/**
+ * /
+ *  file-buffer
+ *  file-base64
+ *  file-string
+ *  file-alt
+ *  dir/
+ *      file-in-dir
+ */
 var fs = require('fs'),
     MockFS = require('mockfs'),
     spec, mfs;
