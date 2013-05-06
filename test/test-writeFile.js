@@ -64,6 +64,12 @@ describe("writeFile", function(){
       }, /ENOTDIR/);
    });
 
+   it("throws EISDIR if trying to write to a directory", function(){
+      assert.throws(function(){
+         fs.writeFileSync('/mnt/mock/dir', 'willthrow');
+      }, /EISDIR/);
+   });
+
    after(function(){
       mounted.umount();
    });
