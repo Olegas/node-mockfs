@@ -43,8 +43,12 @@ describe("exists", function(){
    });
 
    it("can check if directory exists", function(){
+      assert.equal(true, fs.existsSync('/mnt/mock'));
+      assert.equal(true, fs.existsSync('/mnt/mock/'));
       assert.equal(true, fs.existsSync('/mnt/mock/dir'));
+      assert.equal(true, fs.existsSync('/mnt/mock/dir/'));
       assert.equal(false, fs.existsSync('/mnt/mock/dir/no-dir'));
+      assert.equal(false, fs.existsSync('/mnt/mock/dir/no-dir/'));
    });
 
    after(function(){
