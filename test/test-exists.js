@@ -47,6 +47,7 @@ describe("exists", function(){
       assert.equal(true, fs.existsSync('/mnt/mock/'));
       assert.equal(true, fs.existsSync('/mnt/mock/dir'));
       assert.equal(true, fs.existsSync('/mnt/mock/dir/'));
+      assert.equal(true, fs.existsSync('/mnt/mock/../../mnt/mock/dir/'));
       assert.equal(false, fs.existsSync('/mnt/mock/dir/no-dir'));
       assert.equal(false, fs.existsSync('/mnt/mock/dir/no-dir/'));
    });
