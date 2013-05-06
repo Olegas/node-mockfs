@@ -58,3 +58,8 @@ mfs.umount('/mnt/mock');
 fs.existsSync('/mnt/mock/file-buffer'); // false
 ```
 
+Similar libraries
+------------------
+ - [fake-fs](https://github.com/eldargab/node-fake-fs) by [Eldar Gabdullin](https://github.com/eldargab)
+
+
