@@ -20,9 +20,7 @@ describe("rename", function(){
                }
             },
             'dirToOver': {
-               items: {
-                  fileOver: 'fileOver'
-               }
+               items: {}
             },
             'dirToMove': {
                items: {
@@ -80,7 +78,7 @@ describe("rename", function(){
       fs.renameSync('/mnt/mock/moveIt', '/mnt/mock/target/moveIt2');
       assert.equal(true, fs.existsSync('/mnt/mock/target/moveIt2'));
       assert.equal('file-to-move', fs.readFileSync('/mnt/mock/target/moveIt2').toString());
-   })
+   });
 
    it("overwrites existing file", function(){
       assert.equal(true, fs.existsSync('/mnt/mock/will'));
@@ -105,7 +103,7 @@ describe("rename", function(){
       fs.renameSync('/mnt/mock/dirToMove', '/mnt/mock/target/dir2Move');
       assert.equal(true, fs.existsSync('/mnt/mock/target/dir2Move'));
       assert.deepEqual(['file1', 'file2'], fs.readdirSync('/mnt/mock/target/dir2Move'));
-   })
+   });
 
    it("overwrites existing directory", function(){
       assert.equal(true, fs.existsSync('/mnt/mock/overdir'));
@@ -142,11 +140,11 @@ describe("rename", function(){
 
    it("throws EINVAL if trying to rename . or ..", function(){
       assert.throws(function(){
-         fs.renameSync('/mnt/mock/.', '/mnt/mock/some');
+         fs.renameSync('/mnt/mock/dir2/.', '/mnt/mock/some');
       }, /EINVAL/);
 
       assert.throws(function(){
-         fs.renameSync('/mnt/mock/..', '/mnt/mock/some');
+         fs.renameSync('/mnt/mock/dir2/..', '/mnt/mock/some');
       }, /EINVAL/);
    });
 
@@ -158,7 +156,7 @@ describe("rename", function(){
 
    it("throws ENOTEMPTY when trying to overwrite a non-empty dir", function(){
       assert.throws(function(){
-         fs.renameSync('/mnt/mock/dir-enotempty', '/mnt/mock/non-empty-dir');
+         fs.renameSync('/mnt/mock/dir-enotempty', '/mnt/mock/not-empty-dir');
       }, /ENOTEMPTY/);
    });
 
