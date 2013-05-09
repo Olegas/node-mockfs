@@ -14,6 +14,11 @@ describe("rmdir", function(){
             },
             'dir': {
                items: {}
+            },
+            'dir-with-files': {
+               items: {
+                  file: ''
+               }
             }
          }
       }, '/mnt/mock');
@@ -54,6 +59,12 @@ describe("rmdir", function(){
          assert.equal(e.message, 'ENOENT');
          done();
       })
+   });
+
+   it("throws ENOTEMPTY if trying to remove non-empty directory", function(){
+      assert.throws(function(){
+         fs.rmdirSync('/mnt/mock/dir-with-files');
+      }, /ENOTEMPTY/);
    });
 
    after(function(){
