@@ -35,7 +35,7 @@ describe("stat", function(){
 
    });
 
-   it("can read file stats", function(){
+   it("can read file stats", function(done){
 
       var stat = fs.statSync('/mnt/mock/file');
       assert.equal(true, stat.isFile());
@@ -63,18 +63,20 @@ describe("stat", function(){
       assert.equal(20, stat.gid);
       assert.equal(parseInt('0750', 8), stat.mode);
 
-      stat = fs.statSync('/mnt/mock/dir');
-      assert.equal(false, stat.isFile());
-      assert.equal(true, stat.isDirectory());
+      fs.stat('/mnt/mock/dir', function(e, stat){
+         assert.equal(false, stat.isFile());
+         assert.equal(true, stat.isDirectory());
 
-      assert.equal(+new Date('Tue May 07 2013 17:09:57 GMT+0400'), +stat.ctime);
-      assert.equal(+now + 10000, +stat.atime);
-      assert.equal(+mtime, +stat.mtime);
+         assert.equal(+new Date('Tue May 07 2013 17:09:57 GMT+0400'), +stat.ctime);
+         assert.equal(+now + 10000, +stat.atime);
+         assert.equal(+mtime, +stat.mtime);
 
-      assert.equal(0, stat.size);
-      assert.equal(10, stat.uid);
-      assert.equal(20, stat.gid);
-      assert.equal(parseInt('0750', 8), stat.mode);
+         assert.equal(0, stat.size);
+         assert.equal(10, stat.uid);
+         assert.equal(20, stat.gid);
+         assert.equal(parseInt('0750', 8), stat.mode);
+         done();
+      });
 
    });
 

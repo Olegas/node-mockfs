@@ -17,11 +17,17 @@ describe("mkdir", function(){
 
    });
 
-   it("can create directories in already existing ones", function(){
+   it("can create directories in already existing ones", function(done){
 
       assert.equal(false, fs.existsSync('/mnt/mock/adir/some'));
       fs.mkdirSync('/mnt/mock/adir/some');
       assert.equal(true, fs.existsSync('/mnt/mock/adir/some'));
+
+      fs.mkdir('/mnt/mock/async', function(e) {
+         assert.equal(null, e);
+         assert.equal(true, fs.existsSync('/mnt/mock/async'));
+         done();
+      });
 
    });
 
