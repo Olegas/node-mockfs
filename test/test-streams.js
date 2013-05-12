@@ -16,7 +16,7 @@ describe("streams", function(){
 
    describe('createWriteStream', function(){
 
-      it("creating a write stream causing new file created", function(done){
+      it("creating a write stream causing new file to be created", function(done){
 
          var stream = fs.createWriteStream('/mnt/mock/writestream');
          stream.on('open', function(){
@@ -32,9 +32,13 @@ describe("streams", function(){
          stream.on('open', function(){
             stream.write("123");
             stream.end("456");
+         });
+
+         stream.on('close', function(){
             assert.equal('123456', fs.readFileSync('/mnt/mock/writestream').toString());
             done();
          });
+
       });
 
    });
