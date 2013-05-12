@@ -8,6 +8,10 @@ describe("fd* functions", function(){
    before(function(){
       mounted = mfs.mount({
          items: {
+            dir: {
+               items: {}
+            },
+            'emptyfile': '',
             'file': {
                content: new Buffer('qwerty')
             },
@@ -19,14 +23,127 @@ describe("fd* functions", function(){
 
    });
 
-   it("open returns an int greater than 0 file descriptor", function(){
+   describe("open", function(){
 
-      var fd = fs.openSync('/mnt/mock/file', 'r');
+      it("directory can't be opened for writing, EISDIR is thrown", function(){
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/dir', 'w');
+         }, /EISDIR/);
+      });
 
-      assert.equal('number', typeof fd);
-      assert.equal(true, fd > 0);
+      it("returns an int greater than 0 file descriptor", function(){
 
-      fs.closeSync(fd);
+         var fd = fs.openSync('/mnt/mock/file', 'r');
+
+         assert.equal('number', typeof fd);
+         assert.equal(true, fd > 0);
+
+         fs.closeSync(fd);
+
+      });
+
+      it("throws EINVAL in case of unknown string flags", function(){
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/some/file', 'xxxx');
+         }, /EINVAL/);
+      });
+
+      it("read flags (r, r+, rs, rs+) didn't create any files, ENOENT is thrown", function() {
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/new-file', 'r');
+         }, /ENOENT/);
+
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/new-file', 'r+');
+         }, /ENOENT/);
+
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/new-file', 'rs');
+         }, /ENOENT/);
+
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/new-file', 'rs+');
+         }, /ENOENT/);
+      });
+
+      it("if parent is not a directory, ENOTDIR is thrown", function(){
+
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/file/new-file', 'w');
+         }, /ENOTDIR/);
+
+         assert.throws(function(){
+            fs.openSync('/mnt/mock/file/new-file', 'r');
+         }, /ENOTDIR/);
+
+      });
+
+      describe("exclusive mode", function(){
+
+         it("if file is already exists, EEXIST is thrown", function(){
+
+            assert.throws(function(){
+               fs.openSync('/mnt/mock/file', 'wx');
+            }, /EEXIST/);
+
+            assert.throws(function(){
+               fs.openSync('/mnt/mock/file', 'ax');
+            }, /EEXIST/);
+
+            assert.throws(function(){
+               fs.openSync('/mnt/mock/file', 'wx+');
+            }, /EEXIST/);
+
+            assert.throws(function(){
+               fs.openSync('/mnt/mock/file', 'ax+');
+            }, /EEXIST/);
+
+         });
+
+      });
+
+   });
+
+   describe("write(Sync)", function(){
+
+      it("if file is opened for reading only, EACCESS is thrown", function(){
+
+         var fd = fs.openSync('/mnt/mock/file', 'r');
+         assert.throws(function(){
+            fs.writeSync(fd, new Buffer("123"), 0, 3, null);
+         }, /EACCESS/);
+         fs.closeSync(fd);
+
+      });
+
+      it("can write data", function(done){
+         fs.open('/mnt/mock/emptyfile', 'w+', function(e, fd){
+            assert.equal(null, e);
+            var buf = new Buffer("qwertyasdf");
+            fs.write(fd, buf, 0, 10, null, function(e, bytesWritten){
+               assert.equal(null, e);
+               assert.equal(10, bytesWritten);
+               fs.write(fd, buf, 0, 10, 8, function(e, bytesWritten){
+                  assert.equal(null, e);
+                  assert.equal(10, bytesWritten);
+                  fs.write(fd, buf, 0, 10, null, function(e, bytesWritten){
+                     assert.equal(null, e);
+                     assert.equal(10, bytesWritten);
+                     var written = new Buffer(100);
+                     fs.read(fd, written, 0, 100, 0, function(e, bytesRead){
+                        assert.equal(null, e);
+                        assert.equal(28, bytesRead);
+                        assert.equal("qwertyasqwertyasdfqwertyasdf", written.toString('utf8', 0, 28));
+                        fs.close(fd, function(e){
+                           assert.equal(null, e);
+                           done();
+                        });
+                     });
+                  });
+               })
+            })
+         })
+      })
 
    });
 
@@ -51,6 +168,14 @@ describe("fd* functions", function(){
 
          fs.closeSync(fd);
       });
+
+      it("if file is opened for writing only, EBADF is thrown", function(){
+         var fd = fs.openSync('/mnt/mock/file', 'w');
+         assert.throws(function(){
+            fs.readSync(fd, new Buffer(1), 0, 1, null);
+         }, /EBADF/);
+         fs.closeSync(fd);
+      })
 
    });
 
@@ -98,6 +223,14 @@ describe("fd* functions", function(){
                });
             });
          })
+      });
+
+      it("throws EINVAL when supplied file descriptor is not opened for writing", function(){
+         var fd = fs.openSync('/mnt/mock/file', 'r');
+         assert.throws(function(){
+            fs.truncateSync(fd);
+         }, /EINVAL/);
+         fs.closeSync(fd);
       });
 
    });
