@@ -58,6 +58,18 @@ mfs.umount('/mnt/mock');
 fs.existsSync('/mnt/mock/file-buffer'); // false
 ```
 
+Implemented by wrapping bundled `fs` module's basic functions (file descriptors handling, stat, rename/delete files/directories).
+So, functions as `createReadStream`, `appendFileSync` and so are supported "out of the box" without any wrapping.
+
+TODO
+-----------------
+
+ - Access rights check (read/write/search permissions)
+ - *utimes(Sync) functions
+ - *chown(Sync), *chmod(Sync) functions
+ - Links support
+ - (un)watch(File) support
+
 Similar libraries
 ------------------
  - [fake-fs](https://github.com/eldargab/node-fake-fs) by [Eldar Gabdullin](https://github.com/eldargab)
