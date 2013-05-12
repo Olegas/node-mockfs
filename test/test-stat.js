@@ -88,6 +88,12 @@ describe("stat", function(){
       assert.equal(false, stat.isSocket());
    });
 
+   it("throws ENOENT if requested file is not exists", function(){
+      assert.throws(function(){
+         fs.statSync('/mnt/mock/not-exists');
+      }, /ENOENT/);
+   });
+
    after(function(){
       mounted.umount();
    });
