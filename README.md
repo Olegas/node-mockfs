@@ -69,10 +69,8 @@ Currently, NodeJS v0.8+ is supported.
 TODO
 -----------------
 
- - Streams support
  - Support legacy interfaces
  - Access rights check (read/write/search permissions)
- - *utimes(Sync) functions
  - *chown(Sync), *chmod(Sync) functions
  - Links support
  - (un)watch(File) support
@@ -82,9 +80,9 @@ Roadmap
 
 ### v0.1
 
- - Streams support
+ - Streams support: __DONE__
  - Support legacy interfaces
- - *utimes(Sync) functions
+ - *utimes(Sync) functions: __DONE__
 
 ### v0.2
 
