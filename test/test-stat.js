@@ -88,10 +88,15 @@ describe("stat", function(){
       assert.equal(false, stat.isSocket());
    });
 
-   it("throws ENOENT if requested file is not exists", function(){
+   it("throws ENOENT if requested file is not exists", function(done){
       assert.throws(function(){
          fs.statSync('/mnt/mock/not-exists');
       }, /ENOENT/);
+
+      fs.stat('/mnt/mock/not-exists', function(e){
+         assert.equal('ENOENT', e.message);
+         done();
+      });
    });
 
    after(function(){
