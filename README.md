@@ -64,6 +64,7 @@ So, functions as `createReadStream`, `appendFileSync` and so are supported "out 
 TODO
 -----------------
 
+ - Streams support
  - Support legacy interfaces
  - Access rights check (read/write/search permissions)
  - *utimes(Sync) functions
@@ -76,6 +77,7 @@ Roadmap
 
 ### v0.1
 
+ - Streams support
  - Support legacy interfaces
  - *utimes(Sync) functions
 
