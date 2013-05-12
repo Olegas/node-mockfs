@@ -64,11 +64,25 @@ So, functions as `createReadStream`, `appendFileSync` and so are supported "out 
 TODO
 -----------------
 
+ - Support legacy interfaces
  - Access rights check (read/write/search permissions)
  - *utimes(Sync) functions
  - *chown(Sync), *chmod(Sync) functions
  - Links support
  - (un)watch(File) support
+
+Roadmap
+-------
+
+### v0.1
+
+ - Support legacy interfaces
+ - *utimes(Sync) functions
+
+### v0.2
+
+ - Access rights check (read/write/search permissions)
+ - *chown(Sync), *chmod(Sync) functions
 
 Similar libraries
 ------------------
