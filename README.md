@@ -64,6 +64,8 @@ fs.existsSync('/mnt/mock/file-buffer'); // false
 Implemented by wrapping bundled `fs` module's basic functions (file descriptors handling, stat, rename/delete files/directories).
 So, functions as `createReadStream`, `appendFileSync` and so are supported "out of the box" without any wrapping.
 
+Currently, NodeJS v0.8+ is supported.
+
 TODO
 -----------------
 
