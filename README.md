@@ -89,6 +89,16 @@ Roadmap
  - Access rights check (read/write/search permissions)
  - *chown(Sync), *chmod(Sync) functions
 
+### v0.3
+
+ - Links support
+ - (un)watch(File) support
+
+### v1.0
+
+ - Pass NodeJS test suite
+
+
 Similar libraries
 ------------------
  - [fake-fs](https://github.com/eldargab/node-fake-fs) by [Eldar Gabdullin](https://github.com/eldargab)
