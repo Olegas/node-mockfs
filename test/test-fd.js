@@ -13,6 +13,7 @@ describe("fd* functions", function(){
                items: {}
             },
             'emptyfile': '',
+            'file-aw': '123',
             'file': {
                content: new Buffer('qwerty')
             },
@@ -87,6 +88,45 @@ describe("fd* functions", function(){
          var bytesRead = fs.readSync(fd, res, 0, 100, 0);
          assert.equal(6, bytesRead);
          assert.equal("abczxc", res.toString('utf8', 0, 6));
+         fs.closeSync(fd);
+      });
+
+      describe("file truncation on open", function(){
+         it("write modes truncates existing file", function(){
+
+            var fd;
+
+            fs.writeFileSync('/mnt/mock/trunc', "123");
+            assert.equal(3, fs.statSync('/mnt/mock/trunc').size);
+
+            fd = fs.openSync('/mnt/mock/trunc', 'w');
+            fs.closeSync(fd);
+            assert.equal(0, fs.statSync('/mnt/mock/trunc').size);
+
+         });
+
+         it("append modes doesn't truncate file", function(){
+            fs.writeFileSync('/mnt/mock/trunc', "123");
+            assert.equal(3, fs.statSync('/mnt/mock/trunc').size);
+
+            fd = fs.openSync('/mnt/mock/trunc', 'a');
+            fs.closeSync(fd);
+            assert.equal(3, fs.statSync('/mnt/mock/trunc').size);
+         });
+
+      });
+
+      it("write only modes (w, a) - EBADF on read attempt", function(){
+         var fd = fs.openSync('/mnt/mock/file-aw', 'w');
+         assert.throws(function(){
+            fs.readSync(fd, new Buffer(1), 0, 1, 0);
+         }, /EBADF/);
+         fs.closeSync(fd);
+
+         fd = fs.openSync('/mnt/mock/file-aw', 'a');
+         assert.throws(function(){
+            fs.readSync(fd, new Buffer(1), 0, 1, 0);
+         }, /EBADF/);
          fs.closeSync(fd);
       });
 
@@ -262,8 +302,11 @@ describe("fd* functions", function(){
 
    });
 
-   after(function(){
+   afterEach(function(){
       assert.equal(true, mounted._fdManager.isSane());
+   });
+
+   after(function(){
       mounted.umount();
    });
 });
