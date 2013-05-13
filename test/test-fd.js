@@ -235,12 +235,6 @@ describe("fd* functions", function(){
 
    });
 
-   it("if given a bad file descriptor, EBADF is thrown", function(){
-      assert.throws(function(){
-         fs.closeSync(-100);
-      }, /EBADF/);
-   });
-
    after(function(){
       assert.equal(true, mounted._fdManager.isSane());
       mounted.umount();

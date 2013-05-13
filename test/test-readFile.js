@@ -47,12 +47,6 @@ describe("readFile", function(){
       }, Error);
    });
 
-   it("calling without arguments throws a TypeError", function(){
-      assert.throws(function(){
-         fs.readFile();
-      }, TypeError);
-   });
-
    it("throws EISDIR whe trying to read directory", function(done){
       assert.throws(function(){
          fs.readFileSync('/mnt/mock/dir');

@@ -46,12 +46,6 @@ describe("writeFile", function(){
 
    });
 
-   it("calling without arguments throws a TypeError", function(){
-      assert.throws(function(){
-         fs.writeFileSync();
-      }, TypeError);
-   });
-
    it("throws ENOENT if trying to write to file in a nonexistent directory", function(){
       assert.throws(function(){
          fs.writeFileSync('/mnt/mock/nonexist/file', 'willthrow');
