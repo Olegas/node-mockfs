@@ -99,11 +99,6 @@ TODO
 Roadmap
 -------
 
-### v0.1
-
- - Streams support: __DONE__ 
- - *utimes(Sync) functions: __DONE__
-
 ### v0.2
 
  - Access rights check (read/write/search permissions)
