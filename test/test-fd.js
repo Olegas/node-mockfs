@@ -8,6 +8,7 @@ describe("fd* functions", function(){
    before(function(){
       mounted = mfs.mount({
          items: {
+            'file-b64': new Buffer('cXdlcnR5', 'base64'),
             dir: {
                items: {}
             },
@@ -175,6 +176,18 @@ describe("fd* functions", function(){
             fs.readSync(fd, new Buffer(1), 0, 1, null);
          }, /EBADF/);
          fs.closeSync(fd);
+      });
+
+      it("can work with Buffers with specified encoding", function(){
+         fs.open('/mnt/mock/file-b64', 'r', function(e, fd){
+            assert.equal(null, e);
+            var buf = new Buffer(100);
+            fs.read(fd, buf, 0, 100, null, function(e, bytesRead){
+               assert.equal(6, bytesRead);
+               assert.equal("qwerty", buf.toString('utf8', 0, bytesRead));
+               fs.closeSync(fd);
+            });
+         });
       })
 
    });
@@ -233,12 +246,6 @@ describe("fd* functions", function(){
          fs.closeSync(fd);
       });
 
-   });
-
-   it("if given a bad file descriptor, EBADF is thrown", function(){
-      assert.throws(function(){
-         fs.closeSync(-100);
-      }, /EBADF/);
    });
 
    after(function(){
