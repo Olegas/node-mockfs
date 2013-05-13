@@ -11,6 +11,7 @@ describe("stat", function(){
       mounted = mfs.mount({
          time: now,
          items: {
+            'file-b64': new Buffer('cXdlcnR5', 'base64'),
             file: 'qwerty',
             file2: {
                content: new Buffer('qwertyuiop'),
@@ -78,6 +79,11 @@ describe("stat", function(){
          done();
       });
 
+   });
+
+   it("encoding of Buffer doesn't matter", function(){
+      var stat = fs.statSync('/mnt/mock/file-b64');
+      assert.equal(6, stat.size);
    });
 
    it("isBlockDevice, isCharacterDevice, isFIFO, isSocket is always false", function(){
