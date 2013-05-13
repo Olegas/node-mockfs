@@ -79,6 +79,17 @@ describe("fd* functions", function(){
 
       });
 
+      it("if opened with a* flag, file position is set to the end of a file", function(){
+         fs.writeFileSync('/mnt/mock/newfile', "abc");
+         var fd = fs.openSync('/mnt/mock/newfile', 'a+');
+         fs.writeSync(fd, new Buffer('zxc'), 0, 3, null);
+         var res = new Buffer(100);
+         var bytesRead = fs.readSync(fd, res, 0, 100, 0);
+         assert.equal(6, bytesRead);
+         assert.equal("abczxc", res.toString('utf8', 0, 6));
+         fs.closeSync(fd);
+      });
+
       describe("exclusive mode", function(){
 
          it("if file is already exists, EEXIST is thrown", function(){
@@ -107,13 +118,17 @@ describe("fd* functions", function(){
 
    describe("write(Sync)", function(){
 
-      it("if file is opened for reading only, EACCESS is thrown", function(){
+      it("if file is opened for reading only, EACCESS is thrown", function(done){
 
          var fd = fs.openSync('/mnt/mock/file', 'r');
          assert.throws(function(){
             fs.writeSync(fd, new Buffer("123"), 0, 3, null);
          }, /EACCESS/);
-         fs.closeSync(fd);
+         fs.write(fd, new Buffer('123'), 0, 3, null, function(e){
+            assert.equal(e.message, 'EACCESS');
+            fs.closeSync(fd);
+            done()
+         });
 
       });
 
@@ -160,7 +175,6 @@ describe("fd* functions", function(){
          assert.equal(3, bytesRead);
          assert.equal("wer", dst.toString());
 
-         // TODO check real
          dst = new Buffer(3);
          dst.fill('-');
          bytesRead = fs.readSync(fd, dst, 0, 3, null);
