@@ -23,23 +23,30 @@ Basic idea is to declare file system contents via JSON spec, mount it, and use t
  */
 var fs = require('fs'),
     MockFS = require('mockfs'),
-    spec, mfs;
+    spec, mfs, fd;
 
 spec = {
+  time: 'Tue May 07 2013 17:09:57 GMT+0400' // global default time for any FS item, optional
+  ctime: new Date(),                        // creation time default, optional
+/*atime: ...,                               // atime and ctime is not set
+  mtime: ...,*/                             // value is taken from FS defaults (time)
   items: {
     'file-buffer': new Buffer('qwerty'),    // specify content as Buffer
-    'file-base64': new Buffer('cXdlcnR5', 'base64'),
+    'file-base64': new Buffer('cXdlcnR5', 'base64'), // buffer with encoding
     'file-string': 'qwerty',                // or as string
     'file-alt': {                           // alternative syntax
       uid: 'johndoe',                       // owner user, as login name or id
       gid: 300,                             // owner group
       mode: 0766,                           // access mode
-      atime: new Date(),                    // specify a Date
-      mtime: 500,                           // specify a delta (from a point of FS creation time) ?
-      ctime: -500            
+      atime: new Date(),                    // Date instance
+      mtime: 1000255364,                    // timestamp
+      ctime: "-500"                         // number with a sign (+/-) - delta from fs default value
       content: 'asobject'                   // file content
     },
-    'dir': {
+    'dir': {                                // directory - always an object with items property (which is object too)
+      atime: 'Tue May 07 2013 17:09:57 GMT+0400' // Date as string
+      mtime: "+500",                        // stats, uid, gid, mode - on directories too
+    /*ctime*/                               // ctime is not set, value taken from FS defaults  
       items: {                              // directory contents
         'file-in-dir': 'inside directory'             
       }
@@ -54,6 +61,18 @@ fs.readFileSync('/mnt/mock/file-string').toString(); // "qwerty"
 fs.readFile('/mnt/mock/dir/file-in-dir', function(e, r){
     Buffer.isBuffer(r); // true
     r.toString(); // "inside directory"
+});
+
+// file descriptors is also works
+fs.open('/mnt/mock/file-base64', 'r', function(e, fd){
+    if(fd) {
+        var buf = new Buffer(100);
+        fs.read(fd, buf, 0, 100, null, function(e, bytesRead){
+            console.log(bytesRead); // 6
+            console.log(buf.toString('utf8', 0, bytesRead)); // qwerty
+            fs.closeSync(fd);
+        });    
+    }
 });
 
 mfs.umount('/mnt/mock');
@@ -74,6 +93,8 @@ TODO
  - *chown(Sync), *chmod(Sync) functions
  - Links support
  - (un)watch(File) support
+ - `mirror` utility to create MockFS specs from real file systems
+ - Integrate with some date parsing library for convinient atime/ctime/mtime specification
 
 Roadmap
 -------
