@@ -32,12 +32,13 @@ describe("readFile", function(){
 
    });
 
-   it("can read file asynchronously", function(){
+   it("can read file asynchronously", function(done){
 
-      /*assert.equal("qwerty", fs.readFileSync('/mnt/mock/file-string').toString());
-      assert.equal("asobject", fs.readFileSync('/mnt/mock/file-alt').toString());
-      assert.equal("qwerty", fs.readFileSync('/mnt/mock/file-base64').toString());
-      assert.equal("cXdlcnR5", fs.readFileSync('/mnt/mock/file-base64').toString('base64'));*/
+      fs.readFile('/mnt/mock/file-string', function(e, res){
+         assert.equal(null, e);
+         assert.equal("qwerty", res.toString());
+         done();
+      });
 
    });
 
