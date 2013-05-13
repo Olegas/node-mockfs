@@ -80,8 +80,7 @@ Roadmap
 
 ### v0.1
 
- - Streams support: __DONE__
- - Support legacy interfaces
+ - Streams support: __DONE__ 
  - *utimes(Sync) functions: __DONE__
 
 ### v0.2
@@ -96,6 +95,7 @@ Roadmap
 
 ### v1.0
 
+ - Support legacy interfaces
  - Pass NodeJS test suite
 
 
