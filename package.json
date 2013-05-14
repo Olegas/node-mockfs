@@ -10,6 +10,10 @@
       "mock",
       "testing"
    ],
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/Olegas/mockfs.git"
+   },
    "devDependencies": {
       "mocha": "",
       "coveralls": "",
@@ -21,5 +25,8 @@
       "instrument": "node ./node_modules/.bin/istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib",
       "test-cov": "npm run-script instrument && COVER=1 ISTANBUL_REPORTERS=lcovonly node ./node_modules/.bin/mocha -R mocha-istanbul",
       "test": "node ./node_modules/mocha/bin/mocha -R spec"
+   },
+   "engines": {
+      "node": ">=0.8"
    }
 }
