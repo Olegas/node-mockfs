@@ -44,6 +44,7 @@ spec = {
       content: 'asobject'                   // file content
     },
     'dir': {                                // directory - always an object with items property (which is object too)
+      mode: 'rwxr-xr-x',                    // modes as string
       atime: 'Tue May 07 2013 17:09:57 GMT+0400' // Date as string
       mtime: "+500",                        // stats, uid, gid, mode - on directories too
     /*ctime*/                               // ctime is not set, value taken from FS defaults  
