@@ -24,7 +24,7 @@ describe("stat", function(){
             },
             dir: {
                items: {},
-               mode: parseInt('0750', 8),
+               mode: parseInt('0755', 8),
                uid: 10,
                gid: 20,
                ctime: 'Tue May 07 2013 17:09:57 GMT+0400',
@@ -65,6 +65,8 @@ describe("stat", function(){
       assert.equal(parseInt('0750', 8), stat.mode);
 
       fs.stat('/mnt/mock/dir', function(e, stat){
+         assert.equal(null, e);
+
          assert.equal(false, stat.isFile());
          assert.equal(true, stat.isDirectory());
 
@@ -75,7 +77,7 @@ describe("stat", function(){
          assert.equal(0, stat.size);
          assert.equal(10, stat.uid);
          assert.equal(20, stat.gid);
-         assert.equal(parseInt('0750', 8), stat.mode);
+         assert.equal(parseInt('0755', 8), stat.mode);
          done();
       });
 
