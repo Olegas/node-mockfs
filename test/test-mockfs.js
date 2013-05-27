@@ -1,7 +1,7 @@
 var mfs = require('../'),
    assert = require('assert'),
    fs = require('fs'),
-   fdManager = require((process.env.COVER ? '../lib-cov/' : '../lib/') + 'fd-manager.js'),
+   fdManager = require((process.env.COVER == 'mockfs' ? '../lib-cov/' : '../lib/') + 'fd-manager.js'),
    mounted;
 
 describe("MockFS", function(){

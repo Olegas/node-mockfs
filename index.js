@@ -1,1 +1,1 @@
-module.exports = require((process.env.COVER ? './lib-cov/' : './lib/') + 'mockfs.js');
+module.exports = require((process.env.COVER == 'mockfs' ? './lib-cov/' : './lib/') + 'mockfs.js');
