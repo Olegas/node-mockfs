@@ -10,6 +10,9 @@
       "mock",
       "testing"
    ],
+   "bugs": {
+      "url": "https://github.com/Olegas/mockfs/issues"
+   },
    "repository": {
       "type": "git",
       "url": "https://github.com/Olegas/mockfs.git"
