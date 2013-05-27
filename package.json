@@ -1,7 +1,7 @@
 {
    "name": "mockfs",
    "description": "Mocking FS module implementation for testing purpouses",
-   "version": "0.1.1",
+   "version": "0.1.3",
    "author": "Oleg Elifantiev <oleg@elifantiev.ru>",
    "contributors": [],
    "keywords": [
