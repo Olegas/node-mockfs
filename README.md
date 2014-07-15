@@ -7,7 +7,7 @@ mockfs
 [![Dependency Status](https://gemnasium.com/Olegas/mockfs.png)](https://gemnasium.com/Olegas/mockfs)
 
 
-MockFS - Mocking FS module implementation for testing purpouses.
+MockFS - Virtual in-memory file system accessible through native FS module
 
 Basic idea is to declare file system contents via JSON spec, mount it, and use through real `fs.*` functions like an ordinary one.
 
