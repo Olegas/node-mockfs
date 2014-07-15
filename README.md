@@ -1,7 +1,7 @@
 mockfs
 ======
 
-[![Build Status](https://travis-ci.org/Olegas/mockfs.png)](https://travis-ci.org/Olegas/mockfs)
+[![Build Status](https://travis-ci.org/Olegas/node-mockfs.svg?branch=master)](https://travis-ci.org/Olegas/node-mockfs)
 [![Coverage Status](https://coveralls.io/repos/Olegas/mockfs/badge.png?branch=master)](https://coveralls.io/r/Olegas/mockfs)
 [![NPM version](https://badge.fury.io/js/mockfs.png)](http://badge.fury.io/js/mockfs)
 [![Dependency Status](https://gemnasium.com/Olegas/mockfs.png)](https://gemnasium.com/Olegas/mockfs)
