@@ -3,6 +3,7 @@ var mfs = require('../'),
    fs = require('fs'),
    mounted;
 
+
 describe("appendFile", function(){
 
    before(function(){
@@ -50,6 +51,16 @@ describe("appendFile", function(){
       assert.throws(function(){
          fs.appendFileSync('/mnt/mock/nonexist/file', 'willthrow');
       }, /ENOENT/);
+   });
+
+    it("make sure the throwed ENOENT when writing to file in a nonexistent directory is mentioned in the exception.code", function(){
+     try {
+        fs.appendFileSync('/mnt/mock/nonexist/file', 'willthrow');
+      }
+      catch (err){
+          assert.equal(err.code,'ENOENT');
+      }
+
    });
 
    it("throws ENOTDIR if trying to write to file in a non-directory", function(){

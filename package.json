@@ -1,35 +1,38 @@
 {
-   "name": "mockfs",
-   "description": "Mocking FS module implementation for testing purpouses",
-   "version": "0.1.5",
-   "author": "Oleg Elifantiev <oleg@elifantiev.ru>",
-   "contributors": [],
-   "keywords": [
-      "fs",
-      "file system",
-      "mock",
-      "testing"
-   ],
-   "bugs": {
-      "url": "https://github.com/Olegas/mockfs/issues"
-   },
-   "repository": {
-      "type": "git",
-      "url": "https://github.com/Olegas/mockfs.git"
-   },
-   "devDependencies": {
-      "mocha": "",
-      "coveralls": "",
-      "istanbul": "",
-      "mocha-istanbul": "",
-      "assert": ""
-   },
-   "scripts": {
-      "instrument": "node ./node_modules/.bin/istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib",
-      "test-cov": "npm run-script instrument && COVER=mockfs ISTANBUL_REPORTERS=lcovonly node ./node_modules/.bin/mocha -R mocha-istanbul",
-      "test": "node ./node_modules/mocha/bin/mocha -R spec"
-   },
-   "engines": {
-      "node": ">=0.8"
-   }
+  "name": "mockfs",
+  "description": "Mocking FS module implementation for testing purpouses",
+  "version": "0.1.5",
+  "author": "Oleg Elifantiev <oleg@elifantiev.ru>",
+  "contributors": [],
+  "keywords": [
+    "fs",
+    "file system",
+    "mock",
+    "testing"
+  ],
+  "bugs": {
+    "url": "https://github.com/Olegas/mockfs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Olegas/mockfs.git"
+  },
+  "devDependencies": {
+    "assert": "",
+    "coveralls": "",
+    "istanbul": "",
+    "mkdirp": "",
+    "mocha": "",
+    "mocha-istanbul": ""
+  },
+  "scripts": {
+    "instrument": "node ./node_modules/.bin/istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib",
+    "test-cov": "npm run-script instrument && COVER=mockfs ISTANBUL_REPORTERS=lcovonly node ./node_modules/.bin/mocha -R mocha-istanbul",
+    "test": "node ./node_modules/mocha/bin/mocha -R spec"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "dependencies": {
+  }
 }
